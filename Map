@@ -1,0 +1,134 @@
+//
+//  ViewController.swift
+//  BusU Map
+//
+//  Created by Eric Lee on 2/24/20.
+//  Copyright © 2020 Eric Lee. All rights reserved.
+//
+
+import UIKit
+import MapKit
+import CoreLocation
+class ViewController: UIViewController, CLLocationManagerDelegate {
+
+    @IBOutlet weak var textFieldForAddress: UITextField!
+    @IBOutlet weak var getDirections: UIButton!
+    
+    @IBOutlet weak var map: MKMapView!
+    var locationManager = CLLocationManager()
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        
+        
+        
+        let collegeplace = MKPointAnnotation()
+        collegeplace.coordinate=CLLocationCoordinate2D(latitude: 43.037286, longitude: -76.131577)
+        map.addAnnotation(collegeplace)
+        
+        let watson = MKPointAnnotation()
+        watson.coordinate=CLLocationCoordinate2D(latitude: 43.039423, longitude: -76.131416)
+        map.addAnnotation(watson)
+        
+        let womensbuilding = MKPointAnnotation()
+        womensbuilding.coordinate=CLLocationCoordinate2D(latitude: 43.034075, longitude: -76.129691)
+        map.addAnnotation(womensbuilding)
+        
+        let comartbuilding = MKPointAnnotation()
+              comartbuilding.coordinate=CLLocationCoordinate2D(latitude: 43.026732, longitude: -76.128028)
+              map.addAnnotation(comartbuilding)
+        
+        let manleynorth = MKPointAnnotation()
+        manleynorth.coordinate=CLLocationCoordinate2D(latitude: 43.026090, longitude: -76.127698)
+        map.addAnnotation(manleynorth)
+        
+        let manleysouth = MKPointAnnotation()
+        manleysouth.coordinate=CLLocationCoordinate2D(latitude: 43.022985, longitude: -76.125965)
+        map.addAnnotation(manleysouth)
+        
+        let smallroad1 = MKPointAnnotation()
+        smallroad1.coordinate=CLLocationCoordinate2D(latitude: 43.019636, longitude: -76.123225)
+               map.addAnnotation(smallroad1)
+        
+        let smallroad2 = MKPointAnnotation()
+        smallroad2.coordinate=CLLocationCoordinate2D(latitude: 43.021760, longitude: -76.121088)
+               map.addAnnotation(smallroad2)
+        
+        let smallroad3 = MKPointAnnotation()
+        smallroad3.coordinate=CLLocationCoordinate2D(latitude: 43.021547, longitude: -76.119102)
+               map.addAnnotation(smallroad3)
+        
+        let uv = MKPointAnnotation()
+        uv.coordinate=CLLocationCoordinate2D(latitude: 43.021624, longitude: -76.117893)
+               map.addAnnotation(uv)
+        
+        let slocum100 = MKPointAnnotation()
+        slocum100.coordinate=CLLocationCoordinate2D(latitude: 43.020996, longitude: -76.116651)
+               map.addAnnotation(slocum100)
+        
+        let slocumlambryth = MKPointAnnotation()
+        slocumlambryth.coordinate=CLLocationCoordinate2D(latitude: 43.018397, longitude: -76.116277)
+               map.addAnnotation(slocumlambryth)
+        
+        let chinook1 = MKPointAnnotation()
+              chinook1.coordinate=CLLocationCoordinate2D(latitude: 43.018528, longitude: -76.118316)
+                     map.addAnnotation(chinook1)
+        
+        let chinook2 = MKPointAnnotation()
+        chinook2.coordinate=CLLocationCoordinate2D(latitude: 43.017670, longitude: -76.119842)
+               map.addAnnotation(chinook2)
+        
+        let windingridge1 = MKPointAnnotation()
+        windingridge1.coordinate=CLLocationCoordinate2D(latitude: 43.016121, longitude: -76.120900)
+               map.addAnnotation(windingridge1)
+        
+        let windingridge2 = MKPointAnnotation()
+               windingridge2.coordinate=CLLocationCoordinate2D(latitude: 43.014720, longitude: -76.119921)
+                      map.addAnnotation(windingridge2)
+        
+        let goldstein = MKPointAnnotation()
+               goldstein.coordinate=CLLocationCoordinate2D(latitude: 43.016523, longitude: -76.119095)
+                      map.addAnnotation(goldstein)
+        
+        let cuseview = MKPointAnnotation()
+                  cuseview.coordinate=CLLocationCoordinate2D(latitude: 43.027472, longitude: -76.129087)
+                         map.addAnnotation(cuseview)
+        
+        
+        let region = MKCoordinateRegion(center: cuseview.coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
+        map.setRegion(region, animated: true)
+    
+    }
+    
+    
+    @IBAction func busStopsTapped(_ sender: Any) {
+        getBusStop()
+    }
+    func getBusStop(){
+    let geoCoder = CLGeocoder()
+        geoCoder.geocodeAddressString(textFieldForAddress.text!) {(placemarks,error)
+            in
+            guard let placemarks = placemarks, let location = placemarks.first?.location
+                else{
+                    print("No Location")
+                    return
+            }
+            print(location)
+        }
+    }
+    
+    
+    
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        print(locations)
+        
+    }
+
+}
+
