@@ -1,5 +1,12 @@
 //
 //  ViewController.swift
+//  BusU 3.0
+//
+//  Created by Eric Lee on 3/16/20.
+//  Copyright © 2020 Eric Lee. All rights reserved.
+//
+//
+//  ViewController.swift
 //  BusU Map
 //
 //  Created by Eric Lee on 2/24/20.
@@ -8,24 +15,30 @@
 
 import UIKit
 import MapKit
-import CoreLocation
-class ViewController: UIViewController, CLLocationManagerDelegate {
+class ViewController: UIViewController {
 
-    @IBOutlet weak var textFieldForAddress: UITextField!
-    @IBOutlet weak var getDirections: UIButton!
+   
     
     @IBOutlet weak var map: MKMapView!
-    var locationManager = CLLocationManager()
+    let locationManager = CLLocationManager()
+    let regionInMeters: Double = 5000
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        checkLocationServices()
+        //locationManager.delegate = self
 
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestAlwaysAuthorization()
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+        //locationManager.requestWhenInUseAuthorization()
+        //locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        //locationManager.distanceFilter = kCLDistanceFilterNone
+        //locationManager.requestWhenInUseAuthorization()
+        //locationManager.startUpdatingLocation()
         
+         
+        
+        //map.showsUserLocation = true
+        
+       
         
         
         let collegeplace = MKPointAnnotation()
@@ -101,13 +114,42 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
                          map.addAnnotation(cuseview)
         
         
-        let region = MKCoordinateRegion(center: cuseview.coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
-        map.setRegion(region, animated: true)
+       // let region = MKCoordinateRegion(center: self.coordinate, latitudinalMeters: 5000, longitudinalMeters: 5000)
+      //  map.setRegion(region, animated: true)
     
     }
     
+    func setUpLocationManager(){
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+
+           }
+           
+    func checkLocationServices(){
+        if CLLocationManager.locationServicesEnabled(){
+            setUpLocationManager()
+            checkLocationAuthorization()
+               }
+        else {
+           // let region = MKCoordinateRegion(center: CLLocationCoordinate2D, latitudinalMeters: 5000, longitudinalMeters: 5000)
+
+            }
+           }
+    func centerViewOnUserLocation(){
+        if let location = locationManager.location?.coordinate{
+            let region = MKCoordinateRegion.init(center: location, latitudinalMeters: regionInMeters, longitudinalMeters: regionInMeters)
+            map.setRegion(region, animated: true)
+        }
+    }
+           
+        
+           
     
-    @IBAction func busStopsTapped(_ sender: Any) {
+    
+    
+    
+    
+  /*  @IBAction func busStopsTapped(_ sender: Any) {
         getBusStop()
     }
     func getBusStop(){
@@ -121,14 +163,43 @@ class ViewController: UIViewController, CLLocationManagerDelegate {
             }
             print(location)
         }
+    }*/
+    
+    
+    
+    
+    
+    func checkLocationAuthorization() {
+         switch CLLocationManager.authorizationStatus(){
+            case .authorizedWhenInUse:
+                map.showsUserLocation = true
+                centerViewOnUserLocation()
+            case .denied:
+                break
+            case .notDetermined:
+                locationManager.requestWhenInUseAuthorization()
+            case .restricted:
+                break
+            case .authorizedAlways:
+                break
+         @unknown default:
+            break
+            
+            }
     }
     
+}//class bracket
+
+extension ViewController: CLLocationManagerDelegate{
+func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    print(locations)
     
+}
     
-    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        print(locations)
+func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         
     }
+    
+}//extension
 
-}
 
