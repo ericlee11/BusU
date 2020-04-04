@@ -1,0 +1,62 @@
+filepath = '.\getPatterns.txt'
+lat = []
+lon = []
+stopNames = []
+goodBoys = []
+names = []
+forbidden = []
+coords = []
+with open(filepath) as fp:
+    for cnt, line in enumerate(fp):
+        test = line[:-1]
+        try:
+            x = float(test)
+            goodBoys.append(cnt)    
+        except ValueError:
+            stopNames.append((cnt,line))
+            forbidden.append(cnt)
+            names.append(line[:-1])
+
+with open(filepath) as fp2:
+    for cnt, line in enumerate(fp2):
+        newtest = line[:-1]
+        try:
+            x = float(newtest)
+            coords.append(x)
+        except ValueError:
+            pass
+
+
+for i,j in enumerate(coords):
+    if i % 2 == 0:
+        lat.append(j)
+    else:
+        lon.append(j)
+
+newcoords = list(zip(lat,lon))
+testpls = []
+for i in stopNames:
+    testpls.append(i[0])
+print(stopNames)
+print(len(lat),len(lon))
+gohere = "newdata.txt"
+f = open(gohere, 'w')
+f.write("export const locations = \n[")
+f.write("\n")
+for i in range(len(newcoords)):
+    f.write("{")
+    lat = str(newcoords[i][0])
+    lon = str(newcoords[i][1])
+    if forbidden.count(i) != 0:
+        title = "title: " + "\'" + names[testpls.index(i)] + "\'" + ",\n"
+    else:
+        title = "title: " + "\'" + "null" + "\'"+ ",\n" 
+    string = "latitude: " + lat + ",\n"
+    string2 = "longitude: " + lon
+    f.write(title)
+    f.write(string)
+    f.write(string2)
+    f.write("},")
+    f.write("\n")
+f.write("]")    
+f.close()       
