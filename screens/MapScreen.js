@@ -11,8 +11,30 @@ import { locations } from './Data'
 
   class MapScreen extends React.Component {
     constructor(props) {
+
       super(props);
+      this.state={
+        latitude: 43.0392,
+        longitude: -76.1351,
+        //latitudeDelta: 0,
+       // longitudeDelta: 0,
+        error: null
+      }
     }
+    componentDidMount(){
+      navigator.geolocation.getCurrentPosition(position =>{
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          error: null
+        });
+
+      }, 
+      error => this.setState({error: error.message}),
+      {enableHighAccuracy: true, timeout: 20000, maximumAge: 2000}
+      );
+    }
+    
 
     render() {
       const{navigation} = this.props;
@@ -20,13 +42,19 @@ import { locations } from './Data'
     return(
       <View style={styles.container}>
             <MapView style={styles.map}
-          initialRegion={{
-              latitude: 43.0729,
-              longitude: -76.131502,
-              latitudeDelta: 1,
-              longitudeDelta: 1,
+          region={{
+              latitude: this.state.latitude,
+              longitude: this.state.longitude,
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0932,
           }}
+          showsCompass={true}
+          showsUserLocation={true}
+          rotateEnabled={false}
         >
+          <Marker coordinate= {this.state}
+          title={"Your Location as of right now"}
+          />
           
         <MapView.Marker
             coordinate={{latitude: 43.0729,
@@ -47,9 +75,9 @@ import { locations } from './Data'
       </MapView>
       </View>
 
-    );
-    }
-  }
+    );//return end
+    }//end render
+  }//end class
   
 const styles = StyleSheet.create({
   container: {
