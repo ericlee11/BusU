@@ -3,7 +3,11 @@ import { View, Text, StyleSheet, Button, Image,TextInput } from "react-native";
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import { NavigationActions } from "react-navigation";
-
+//create account screen
+/*
+sets up the screen with username input box, email input box, and password input box.
+Press Sign up button to sign up and it moves you to the map screen.
+*/
 class CreateAccountScreen extends React.Component {
 render(){
   const{navigation} = this.props;
