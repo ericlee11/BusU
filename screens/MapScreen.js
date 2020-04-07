@@ -8,7 +8,10 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 
 import { locations } from './Data'
-
+/*
+Map Screen loads with map markers
+User Location is processed and put onto the map and region
+*/
   class MapScreen extends React.Component {
     constructor(props) {
 
