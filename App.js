@@ -5,19 +5,20 @@ import {createStackNavigator} from '@react-navigation/stack';
 
 
 
-//screens
+//Import screens from other files
 import HomeScreen from './screens/HomeScreen';
 import CreateAccountScreen from './screens/CreateAccountScreen.js';
 import MapScreen from './screens/MapScreen';
 import SignInPage from './screens/SignInPage';
 
-const Stk = createStackNavigator();
+const Stk = createStackNavigator();//Stack navigator to move between pages
 
 export default class App extends React.Component {
   state = {
     fontLoaded: false,
   };
-
+//Render the screen. Each Route of the navigator has a unique name so users can see which page they are on
+//Users Can go back with the back button in the left side of the screen  
 render(){
   return(
     <NavigationContainer>
