@@ -1,3 +1,4 @@
+//Locations of all the SU bus stops from the Centro API
 export const locations = 
 [
 {latitude: 43.020959999999,
