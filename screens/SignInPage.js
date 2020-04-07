@@ -4,7 +4,11 @@ import MapView, {Marker} from 'react-native-maps';
 import { StyleSheet, Text, View, Button,TextInput } from 'react-native';
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-
+/*
+Sign In Page:
+Email input box and password input box
+Sign in button brings you to the map screen
+*/
 class SignInPage extends React.Component {
   constructor(props) {
     super(props);
