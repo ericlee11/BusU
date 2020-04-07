@@ -5,7 +5,12 @@ import { NavigationActions } from "react-navigation";
 import BusUIcon from '../assets/images/BusUIcon.png'
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-
+/*
+Home Screen loads first when you open the Application
+Renders the screen.
+Has all the picture and buttons to move to desired screen
+Once a button is clicked it will move you to the next screen.
+*/
 class HomeScreen extends React.Component {
   constructor(props) {
     super(props);
